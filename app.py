@@ -1,5 +1,7 @@
 # import necessary libraries
-from models import create_classes
+import numpy as np
+#import pickle as pkl
+import joblib
 import os
 from flask import (
     Flask,
@@ -17,64 +19,70 @@ app = Flask(__name__)
 # Database Setup
 #################################################
 
-from flask_sqlalchemy import SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db.sqlite"
+# from flask_sqlalchemy import SQLAlchemy
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///db.sqlite"
 
-# Remove tracking modifications
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# # Remove tracking modifications
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 
-Pet = create_classes(db)
+model = joblib.load('decisionTree_model.sav', mmap_mode=None)
 
 # create route that renders index.html template
 @app.route("/")
 def home():
-    return render_template("index.html")
-
-
-# Query the database and send the jsonified results
-@app.route("/send", methods=["GET", "POST"])
-def send():
-    if request.method == "POST":
-        name = request.form["petName"]
-        lat = request.form["petLat"]
-        lon = request.form["petLon"]
-
-        pet = Pet(name=name, lat=lat, lon=lon)
-        db.session.add(pet)
-        db.session.commit()
-        return redirect("/", code=302)
-
     return render_template("form.html")
 
+@app.route('/predict')
+def predict():
+    # ini_features = [int(x) for x in request.form.values()]
+    # fnl_feaures = [np.array(ini_features)]
+    # predict = model.predict(fnl_feaures)
+    
+    # result = round(predict[0],2)
+    # return render_template('form.html', predict_txt = 'Decision should be ${}'.format(result))
+    return render_template('form.html')
 
-@app.route("/api/pals")
-def pals():
-    results = db.session.query(Pet.name, Pet.lat, Pet.lon).all()
+@app.route("/send", methods=["GET", "POST"])
+def send():
+    #print(request.form)
+    #print(request.get_json(force=True))
+    data = []
+    if request.method == "POST":
+    
+        vMatch = request.form["match"]
+      
+        vLike = request.form["like"]
+        vAttr = request.form["attr"]
+        vDec_o = request.form["dec_o"]
+        vProb = request.form["prob"]
+        vSinc = request.form["sinc"]
+        vAttr_2_1 = request.form["attr_2_1"]
+        vAttr_1 = request.form["attr_1"]
+ 
+        
+        data.append(vMatch)
+        data.append(vLike)
+        data.append(vAttr)
+        data.append(vDec_o)
+        data.append(vProb)
+        data.append(vSinc)
+        data.append(vAttr_2_1)
+        data.append(vAttr_1)
+       
+    
+    #print(data)
+    predict = model.predict(np.array(data).reshape(1, -1))
+    #print(predict)
+    
+    result = predict[0]
+    
+    
+    #return jsonify(result)
+    return str(result)
 
-    hover_text = [result[0] for result in results]
-    lat = [result[1] for result in results]
-    lon = [result[2] for result in results]
-
-    pet_data = [{
-        "type": "scattergeo",
-        "locationmode": "USA-states",
-        "lat": lat,
-        "lon": lon,
-        "text": hover_text,
-        "hoverinfo": "text",
-        "marker": {
-            "size": 50,
-            "line": {
-                "color": "rgb(8,8,8)",
-                "width": 1
-            },
-        }
-    }]
-
-    return jsonify(pet_data)
-
+ 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
