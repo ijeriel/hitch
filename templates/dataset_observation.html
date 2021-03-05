@@ -69,7 +69,11 @@
               
     <div class="col-md-12 divbdy">
       <br>
-        <h1>Original dataset</h1>
+      <img src="../static/images/Datatable.PNG" class="img-fluid" alt="Responsive image"></img>
+      <br>
+      <br>
+      <img src="../static/images/summarystable_attributes.PNG" class="img-fluid" alt="Responsive image"></img>
+        <!-- <h1>Original dataset</h1>
           <ul> 
               <li>Columns: 195</li> 
               <li>Rows: 8378 </li>
@@ -80,23 +84,39 @@
 
   <div class="col-md-12 divbdy">
 
-    <h1>cleaned Dataset by removing columns over 82 NaN and replacing NaN by column median</h1>
-      <ul> 
-          <li>Columns: 78</li> 
-          <li>Rows: 8378 </li>
-          <li>Columns having NaN under 400: column median </li>
-        </ul>  
-        <hr>
+    <br>
+        <h1>Description of Attributes</h1>
+          <ul> 
+              <li> Match: the decision if you want to go see him/her again
+              <li>Like: how much you like that person
+              <li>Attr: rating of the subject
+              <li>Dec_0: Decision of the night of event
+              <li>Prob: How probable do you think it is that this person will say 'yes' for you?
+              <li>Sinc: how important you think sincere is for that person
+              <li>Attr2_1: What do you think the opposite sex looks for in a date
+              <li>Attr1_1: importance of the attribute
+              </ul>   -->
+
   </div>
 
   <div class="col-md-12 divbdy">
 
-    <h1>Finalized dataset choosen from the top importance rank in random forest/decision tree models after testing the model score by GridSearchCV</h1>
-      <ul> 
-          <li>Columns: 10 </li> 
-          <li>Rows: 8378 </li>
-          <img src="../static/images/Datatable.PNG" width="1000" class="img-fluid" alt="Responsive image"></img>
+    <br>
+    <h3>Description of Attributes</h3>
+      <ul>
+          <li>Dec: Final decision
+          <li> Match: yes / no
+          <li>Like: How much you like that person
+          <li>Attr: Rating of the subject
+          <li>Dec_0: Decision of the night of event
+          <li>Prob: How probable do you think it is that this person will say 'yes' for you?
+          <li>Sinc: how important you think sincere is for that person
+          <li>Attr2_1: What do you think the opposite sex looks for in a date
+          <li>Attr1_1: importance of the attribute
       </ul>  
+
+          <!-- <img src="../static/images/Datatable.PNG" width="1000" class="img-fluid" alt="Responsive image"></img>
+      </ul>   -->
 
   </div>
 </body>
