@@ -102,6 +102,7 @@
        <br> 
        <label for="dec_o">Decision of the night of event</label> 
        <select id="dec_o" name="dec_o"> 
+  
            <option value="1">1</option> 
            <option value="2">2</option> 
            <option value="3">3</option> 
@@ -116,12 +117,14 @@
        <br> 
        <label for="prob">How probable do you think it is that this person will say 'yes' for you?</label> 
        <select id="prob" name="prob"> 
+   
            <option value="1">Yes</option> 
            <option value="0">No</option> 
        </select> 
        <br> 
        <label for="sinc">How important you think sincere is for that person?</label> 
        <select id="sinc" name="sinc"> 
+        
            <option value="1">1</option> 
            <option value="2">2</option> 
            <option value="3">3</option> 
@@ -135,7 +138,8 @@
        </select> 
        <br>
        <label for="attr_2_1">What do you think the opposite sex looks for in a date?</label> 
-       <select id="attr_2_1" name="attr_2_1"> 
+       <select id="attr_2_1" name="attr_2_1">
+       
            <option value="1">1</option> 
            <option value="2">2</option> 
            <option value="3">3</option> 
@@ -150,6 +154,7 @@
        <br> 
        <label for="attr_1">Importance of the attribute?</label> 
        <select id="attr_1" name="attr_1"> 
+       
            <option value="1">1</option> 
            <option value="2">2</option> 
            <option value="3">3</option> 
@@ -168,12 +173,9 @@
    <br>
 
    <!-- Nikole to add result -->
+   <h1> Predicted Final Decision</h1>
+   <h2>{{ predict_text }}</h2>
 
-
-
-
-
-       
      </form> 
 ​
    </div> 

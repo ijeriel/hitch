@@ -8,7 +8,8 @@ from flask import (
     render_template,
     jsonify,
     request,
-    redirect)
+    redirect,
+    url_for)
 
 #################################################
 # Flask Setup
@@ -31,23 +32,45 @@ model = joblib.load('decisionTree_model.sav', mmap_mode=None)
 
 # create route that renders index.html template
 @app.route("/")
-def home():
-    return render_template("form.html")
+def index ():
+    return render_template("index.html")
 
-@app.route('/predict')
-def predict():
-    # ini_features = [int(x) for x in request.form.values()]
-    # fnl_feaures = [np.array(ini_features)]
-    # predict = model.predict(fnl_feaures)
-    
-    # result = round(predict[0],2)
-    # return render_template('form.html', predict_txt = 'Decision should be ${}'.format(result))
-    return render_template('form.html')
+@app.route('/index.html', methods=['GET', 'POST'])
+def home():
+    return render_template('index.html')
+
+@app.route('/research_methodology.html')
+def reasearh():
+
+    return render_template("research_methodology.html")
+
+@app.route("/dataset_observation.html")
+def obsserv():
+    return render_template("dataset_observation.html")
+
+@app.route("/dataset_analysis.html")
+def data_analysis():
+    return render_template("dataset_analysis.html")
+
+@app.route("/model_presentation.html")
+def dataset():
+    return render_template("model_presentation.html")
+
+# @app.route("/challenges")
+# def dataset():
+#     return render_template("challenges.html")
+
+# @app.route("/Q&A")
+# def dataset():
+#     return render_template("Q&A.html")
+
+@app.route("/model_prediction.html")
+def redirectPredict():
+    return render_template('/model_prediction.html')
 
 @app.route("/send", methods=["GET", "POST"])
 def send():
-    #print(request.form)
-    #print(request.get_json(force=True))
+
     data = []
     if request.method == "POST":
     
@@ -78,9 +101,13 @@ def send():
     
     result = predict[0]
     
-    
+    if result == 1:
+        result ='Yes'
+    else:
+        result ='No'
     #return jsonify(result)
-    return str(result)
+    #return str(result)
+    return render_template('model_prediction.html', predict_text = 'Your Decision: {}'.format(str(result)))
 
  
 
